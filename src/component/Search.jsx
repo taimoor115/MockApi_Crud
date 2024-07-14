@@ -1,11 +1,19 @@
+import { useDispatch } from "react-redux";
+import Input from "./Input";
+import { setSearch } from "../store/features/userSlice";
+
 const Search = () => {
+  const dispatch = useDispatch();
+  const handleChange = (e) => {
+    e.preventDefault();
+    dispatch(setSearch(e.target.value));
+  };
   return (
     <form className="d-flex" role="search">
-      <input
-        className="form-control me-2 mb-4"
+      <Input
         type="search"
-        placeholder="Search User"
-        aria-label="Search"
+        placeholder="Search User..."
+        onChange={handleChange}
       />
     </form>
   );

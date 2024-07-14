@@ -12,7 +12,6 @@ const Edit = () => {
   const { id } = useParams();
   const status = useSelector((state) => state.user.status);
   const user = useSelector((state) => state.user.user);
-  //   console.log(user);
 
   useEffect(() => {
     dispatch(getUserById(id));
@@ -40,8 +39,6 @@ const Edit = () => {
     },
     enableReinitialize: true,
   });
-
-  //   console.log(values);
 
   return (
     <div className="container">

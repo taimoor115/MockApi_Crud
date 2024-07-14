@@ -17,7 +17,12 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setSearch(state, action) {
+      console.log(action.payload);
+      state.setSearch = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUsers.pending, (state) => {
@@ -75,7 +80,7 @@ const userSlice = createSlice({
   },
 });
 
-// export const {} = userSlice.action;
+export const { setSearch } = userSlice.actions;
 export default userSlice.reducer;
 
 export const getUsers = createAsyncThunk("getUsers", async () => {

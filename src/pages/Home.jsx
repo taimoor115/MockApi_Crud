@@ -1,16 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../store/features/userSlice";
+import { destroyUser, getUsers } from "../store/features/userSlice";
 import { FaEye } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Heading, Loader, Modal } from "../component";
+import { Heading, Loader } from "../component";
 import Search from "../component/Search";
+import { MdDelete } from "react-icons/md";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { users, status } = useSelector((state) => state.user);
+  const [id, setId] = useState(0);
+  const search = useSelector((state) => state.user.setSearch);
 
+  const filteredUsers = search
+    ? users?.filter((user) =>
+        user.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : users;
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
@@ -37,20 +45,74 @@ const Home = () => {
               </thead>
               <tbody>
                 {users && status !== "loading" ? (
-                  users.map((user, index) => (
+                  filteredUsers.map((user, index) => (
                     <tr key={user?.id || ""}>
                       <td>{index + 1}</td>
                       <td>{user?.name}</td>
                       <td>{user?.profession}</td>
                       <td>{user?.gender}</td>
-                      <td className="d-flex justify-content-between align-items-center fs-5">
+                      <td className="d-flex justify-content-between align-items-center fs-4 ">
                         <Link to={`/users/${user?.id}`}>
                           <FaEye />
                         </Link>
                         <Link to={`/users/edit/${user?.id}`}>
                           <FaEdit />
                         </Link>
-                        <Modal id={user?.id} />
+                        <div>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-sm"
+                            onClick={() => setId(user?.id)}
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                          >
+                            <MdDelete />
+                          </button>
+
+                          <div
+                            className="modal fade"
+                            id="exampleModal"
+                            tabIndex="-1"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                          >
+                            <div className="modal-dialog">
+                              <div className="modal-content">
+                                <div className="modal-header">
+                                  <h1
+                                    className="modal-title fs-5"
+                                    id="exampleModalLabel"
+                                  >
+                                    Are you sure?
+                                  </h1>
+                                  <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  ></button>
+                                </div>
+                                <div className="modal-footer">
+                                  <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => dispatch(destroyUser(id))}
+                                    data-bs-dismiss="modal"
+                                    className="btn btn-primary"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   ))
