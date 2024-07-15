@@ -5,7 +5,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar navbar-expand-lg bg-primary sticky-top">
         <div className="container-fluid">
-          <Link to="/users" className="navbar-brand text-light fs-5 fw-bold">
+          <Link to="/" className="navbar-brand text-light fs-5 fw-bold">
             CRUD
           </Link>
           <button
