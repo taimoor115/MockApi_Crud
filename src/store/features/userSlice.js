@@ -19,7 +19,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setSearch(state, action) {
-      console.log(action.payload);
       state.setSearch = action.payload;
     },
   },
@@ -90,8 +89,7 @@ export const getUsers = createAsyncThunk("getUsers", async () => {
 
 export const postUser = createAsyncThunk("postUser", async (userData) => {
   const data = await apiClient.post("/users", userData);
-
-  console.log(data);
+  return data;
 });
 
 export const getUserById = createAsyncThunk("getUserById", async (userId) => {
@@ -107,10 +105,8 @@ export const destroyUser = createAsyncThunk("deleteUser", async (id) => {
 export const updateUser = createAsyncThunk(
   "updateUser",
   async ({ updatedData, id }) => {
-    console.log("Hello", id);
-    console.log("Hello2", updatedData);
     const response = await apiClient.put(`/users/${id}`, updatedData);
-    console.log(response.data);
+
     return response.data;
   }
 );

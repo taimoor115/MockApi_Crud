@@ -8,8 +8,7 @@ const Show = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const status = useSelector((state) => state.user.status);
-  console.log(status);
-  console.log("User", user);
+
   const { id } = useParams();
   useEffect(() => {
     dispatch(getUserById(id));

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 const Modal = ({ id }) => {
   const dispatch = useDispatch();
-  console.log(id);
+
   return (
     <div>
       <button

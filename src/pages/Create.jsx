@@ -21,14 +21,13 @@ const Create = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const status = useSelector((state) => state.user.status);
-  console.log(status);
+
   const { values, errors, touched, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: userSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log("Initials", values);
       await dispatch(postUser(values));
-      navigate("/users");
+      navigate("/");
       resetForm();
     },
   });
@@ -133,20 +132,11 @@ const Create = () => {
               />
             </div>
             <Button
+              className="btn btn-primary"
               value={status == "loading" ? "Creating..." : "Create User"}
               type="submit"
               disabled={status == "loading"}
-              className="btn btn-primary"
             />
-            {/*             
-            <button
-              value="Create User"
-              disabled={status == "loading"}
-              type="submit"
-              className="btn btn-primary"
-            >
-              {status == "loading" ? "Creating..." : "Create User"}
-            </button> */}
           </form>
         </div>
       </div>

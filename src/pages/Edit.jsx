@@ -34,8 +34,7 @@ const Edit = () => {
     validationSchema: userSchema,
     onSubmit: async (values) => {
       await dispatch(updateUser({ updatedData: values, id }));
-      navigate("/users");
-      console.log(values);
+      navigate("/");
     },
     enableReinitialize: true,
   });
