@@ -10,8 +10,7 @@ const Edit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const status = useSelector((state) => state.user.status);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state?.user?.user);
 
   useEffect(() => {
     dispatch(getUserById(id));
@@ -29,12 +28,27 @@ const Edit = () => {
     },
   };
 
-  const { values, handleSubmit, errors, touched, handleChange } = useFormik({
+  const {
+    values,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    setSubmitting,
+    touched,
+    handleChange,
+  } = useFormik({
     initialValues,
     validationSchema: userSchema,
     onSubmit: async (values) => {
-      await dispatch(updateUser({ updatedData: values, id }));
-      navigate("/");
+      setSubmitting(true);
+      try {
+        await dispatch(updateUser({ updatedData: values, id }));
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setSubmitting(false);
+      }
     },
     enableReinitialize: true,
   });
@@ -140,9 +154,9 @@ const Edit = () => {
                 />
               </div>
               <Button
-                value={status == "loading" ? "Updating..." : "Update User"}
+                value={isSubmitting ? "Updating..." : "Update User"}
                 type="submit"
-                disabled={status == "loading"}
+                disabled={isSubmitting}
                 className="btn btn-primary"
               />
             </form>

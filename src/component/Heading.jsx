@@ -5,7 +5,7 @@ const Heading = ({ heading, className, path }) => {
     <Link className="text-decoration-none" to={path}>
       <h1
         to="/"
-        className={`fs-1 text-primary text-center fw-bold ${className}`}
+        className={`fs-1 text-primary text-center fw-bold    ${className}`}
       >
         {heading}
       </h1>
