@@ -5,6 +5,7 @@ import { getUserById, updateUser } from "../store/features/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Button, Error, Heading, Input, Loader } from "../component";
+import toast from "react-hot-toast";
 
 const Edit = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const Edit = () => {
       setSubmitting(true);
       try {
         await dispatch(updateUser({ updatedData: values, id }));
+        toast.success("User updated successfully...");
         navigate("/");
       } catch (error) {
         console.log(error);

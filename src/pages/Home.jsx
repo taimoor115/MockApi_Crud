@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Heading, Loader } from "../component";
 import Search from "../component/Search";
 import { MdDelete } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -104,7 +105,12 @@ const Home = () => {
                                     </button>
                                     <button
                                       type="button"
-                                      onClick={() => dispatch(destroyUser(id))}
+                                      onClick={() => {
+                                        dispatch(destroyUser(id));
+                                        toast.success(
+                                          "User delete successfully..."
+                                        );
+                                      }}
                                       data-bs-dismiss="modal"
                                       className="btn btn-primary"
                                     >

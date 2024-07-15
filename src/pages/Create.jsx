@@ -1,9 +1,10 @@
 import { useFormik } from "formik";
 import { Button, Error, Heading, Input } from "../component";
 import { userSchema } from "../validations";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postUser } from "../store/features/userSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const initialValues = {
   name: "",
@@ -38,6 +39,7 @@ const Create = () => {
       try {
         await dispatch(postUser(values));
         resetForm();
+        toast.success("User created successfully...");
         navigate("/");
         setSubmitting(false);
       } catch (error) {
